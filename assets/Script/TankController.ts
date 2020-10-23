@@ -6,7 +6,8 @@
 //  - https://docs.cocos.com/creator/manual/en/scripting/life-cycle-callbacks.html
 
 const {ccclass, property} = cc._decorator;
-import {Events,AttackEvent} from "./Const"
+import {Events,AttackEvent} from "./Const";
+import BluttParabolaPath from "./components/BluttParabolaPath";
 @ccclass
 export default class TankController extends cc.Component {
 
@@ -17,7 +18,8 @@ export default class TankController extends cc.Component {
     fireNode:cc.Node;//炮弹发射的位置
     @property(cc.Node)
     gun:cc.Node;//炮弹口
-
+    @property({type:BluttParabolaPath,tooltip:"用来跟随炮管进行抛物线的提前计算"})
+    bluttlePath:BluttParabolaPath;
     @property
     maxForce:number = 100;//最大力
     @property
@@ -39,6 +41,7 @@ export default class TankController extends cc.Component {
     canController:boolean = false;//是否能被玩家操作，
     private rigidBody:cc.RigidBody;
     private moveDirection:number;//移动方向
+    private forcePercent:number = 0.5;
     start () {
        this.rigidBody = this.node.getComponent(cc.RigidBody);
        if(this.canController){
@@ -117,4 +120,37 @@ export default class TankController extends cc.Component {
            this.gun.angle = angle;
        }
     }
+    lateUpdate(){
+        if(this.bluttlePath!=null){
+            let drawStart = cc.v2();
+            let drawVelo = cc.v2();
+            this.getBulletPosAndVelocity(drawStart,drawVelo);
+            this.bluttlePath.drawPath(drawStart,drawVelo);
+        }
+        
+    }
+    /**
+     *获取将要发射子弹的位置和速度 
+     *@param pos 接受位置的vec2
+     *@param velocity 接受速度的vec2
+    */
+    getBulletPosAndVelocity(pos:cc.Vec2,velocity:cc.Vec2){
+        let pos1 = this.fireNode.convertToWorldSpaceAR(cc.Vec2.ZERO);
+        let pos2 = this.gun.convertToWorldSpaceAR(cc.Vec2.ZERO);
+        let angle = Math.atan((pos1.y-pos2.y)/(pos1.x-pos2.x))*180/Math.PI;
+        if(pos1.x >= pos2.x){
+            velocity.x = this.forcePercent*this.maxForce*Math.cos(angle*Math.PI/180);
+            velocity.y = this.forcePercent*this.maxForce*Math.sin(angle*Math.PI/180);
+           
+        }else{
+            velocity.x = -this.forcePercent*this.maxForce*Math.cos(angle*Math.PI/180);
+            velocity.y = -this.forcePercent*this.maxForce*Math.sin(angle*Math.PI/180);
+        }
+        pos1.x = -cc.winSize.width/2+pos1.x;
+        pos1.y = -cc.winSize.height/2+pos1.y;
+
+        pos.x = pos1.x;
+        pos.y = pos1.y;
+    }
+
 }

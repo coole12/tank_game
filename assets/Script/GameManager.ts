@@ -39,6 +39,7 @@ export default class GameManager extends cc.Component {
         this._isTouch = true;
 
         this.gameNode.getComponent(GameShakeEffect).shakeEffect(0.5)
+      //  this.gameNode.setPosition(cc.v2(-10+20*Math.random(),-15+30*Math.random()))
     }   
     onTouchMove(event:cc.Event.EventTouch){
 

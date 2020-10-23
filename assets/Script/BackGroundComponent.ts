@@ -23,6 +23,7 @@ export default class BackGroundComponent extends cc.Component {
     // LIFE-CYCLE CALLBACKS:
     material:cc.Material = null;
     followPos:cc.Vec3 = cc.v3();
+    followScale:cc.Vec2 = cc.Vec2.ONE;
     onLoad () {
         this.material = this.node.getComponent(cc.Sprite).getMaterial(0);
     }
@@ -30,33 +31,42 @@ export default class BackGroundComponent extends cc.Component {
     start () {
         
         this.followPos = this.follow.position.clone();
+        this.followScale = this.follow.getScale(this.followScale);
         this.updateLivingRect();
     }
 
     //更新直播流窗口位置
     updateLivingRect(){
         let size = this.node.getContentSize();
-        let _dx1 = size.width/2 - Design_Width/2;
-        let _dy1 = size.height/2 - Design_Height/2;
-        let _x1 = _dx1/size.width - this.followPos.x/size.width;
-        let _y1 = _dy1/size.height
-        let _z1 = _x1+this.livingWidth/size.width;
-        let _w1 = _y1+this.livingHeight/size.height;
+        let sizeW = size.width*this.followScale.x;
+        let sizeH = size.height*this.followScale.y;
+        let _dx1 = sizeW/2 - Design_Width/2;
+        let _dy1 = sizeH/2 - Design_Height/2;
+        let _x1 = _dx1/sizeW - this.followPos.x/sizeW;
+        let _y1 = _dy1/sizeH + this.followPos.y/sizeH;
+        let _z1 = _x1+this.livingWidth/sizeW;
+        let _w1 = _y1+this.livingHeight/sizeH;
         this.material.setProperty("leftRect",[_x1,_y1,_z1,_w1])
 
-        let _x2 = 1-_x1-this.livingWidth/size.width;
+        let _x2 = 1-_dx1/sizeW - this.followPos.x/sizeW-this.livingWidth/sizeW;
         let _y2 = _y1;
-        let _z2 = 1-_x1
+        let _z2 = _x2+this.livingWidth/sizeW;
         let _w2 = _w1;
-        console.log(_x2,_y2,_z2,_w2)
         this.material.setProperty("rightRect",[_x2,_y2,_z2,_w2])
 
     }
 
     update (dt) {
-        if(!this.followPos.equals(this.follow.position)){
+        
+    }
+
+    lateUpdate(){
+        if(!this.followPos.equals(this.follow.position) || this.followScale.x!=this.follow.scaleX || this.followScale.y!=this.follow.scaleY){
             this.followPos = this.follow.position.clone();
+            this.followScale.x = this.follow.scaleX ;
+            this.followScale.y = this.follow.scaleY ;
             this.updateLivingRect()
+          
         }
     }
     //检测摄像头是否进行了变化，如果摄像头变了，则材质的参数需要进行变化

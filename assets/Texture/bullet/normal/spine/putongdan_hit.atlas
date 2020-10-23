@@ -1,0 +1,83 @@
+
+putongdan_hit.png
+size: 417,1073
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+images/gy1
+  rotate: false
+  xy: 201, 2
+  size: 128, 128
+  orig: 512, 512
+  offset: 191, 187
+  index: -1
+images/sj_001
+  rotate: false
+  xy: 206, 312
+  size: 191, 189
+  orig: 512, 512
+  offset: 164, 154
+  index: -1
+images/sj_003
+  rotate: false
+  xy: 2, 55
+  size: 197, 198
+  orig: 512, 512
+  offset: 161, 149
+  index: -1
+images/sj_004
+  rotate: false
+  xy: 210, 869
+  size: 205, 202
+  orig: 512, 512
+  offset: 153, 149
+  index: -1
+images/sj_005
+  rotate: false
+  xy: 2, 651
+  size: 203, 209
+  orig: 512, 512
+  offset: 150, 147
+  index: -1
+images/sj_006
+  rotate: false
+  xy: 2, 862
+  size: 206, 209
+  orig: 512, 512
+  offset: 147, 147
+  index: -1
+images/sj_007
+  rotate: false
+  xy: 2, 255
+  size: 202, 195
+  orig: 512, 512
+  offset: 147, 149
+  index: -1
+images/sj_008
+  rotate: false
+  xy: 2, 452
+  size: 202, 197
+  orig: 512, 512
+  offset: 147, 149
+  index: -1
+images/sj_009
+  rotate: false
+  xy: 210, 686
+  size: 202, 181
+  orig: 512, 512
+  offset: 147, 165
+  index: -1
+images/sj_010
+  rotate: false
+  xy: 207, 503
+  size: 202, 181
+  orig: 512, 512
+  offset: 147, 165
+  index: -1
+images/sj_011
+  rotate: false
+  xy: 206, 132
+  size: 202, 178
+  orig: 512, 512
+  offset: 147, 165
+  index: -1
