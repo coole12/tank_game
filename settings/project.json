@@ -48,9 +48,9 @@
     "enemy",
     "bullet"
   ],
-  "start-scene": "2d2f792f-a40c-49bb-a189-ed176a246e49",
+  "start-scene": "f7770ebd-3f59-4921-b2df-c96029d4e86a",
   "design-resolution-width": 750,
-  "design-resolution-height": 1334,
+  "design-resolution-height": 888,
   "fit-width": true,
   "fit-height": false,
   "use-project-simulator-setting": false,
